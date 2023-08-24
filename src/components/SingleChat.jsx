@@ -25,8 +25,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const ENDPOINT = "http://127.0.0.1:8080/";
   socket = io(ENDPOINT)
 
-  
-  
+
+
 
 
 
@@ -135,10 +135,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
   }, [selectedChat]);
+  useEffect(()=>{
+    fetchMessages()
+  },[])
 
   useEffect(() => {
-    console.log()
+    
+
     socket.on("message recieved", (newMessageRecieved) => {
+      console.log(newMessageRecieved)
+
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -149,12 +155,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         // }
       } else {
         // console.log(1)
-        console.log(messages) 
-        
+        // console.log(messages) 
+
         console.log(setMessages([...messages,newMessageRecieved]))
       }
     });
-  },[socket]);
+  });
 
 
 
